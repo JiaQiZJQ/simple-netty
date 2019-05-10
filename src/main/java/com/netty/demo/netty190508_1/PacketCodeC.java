@@ -2,13 +2,19 @@ package com.netty.demo.netty190508_1;
 
 import com.netty.demo.netty190508_1.serialize.Serializer;
 import com.netty.demo.netty190508_1.serialize.impl.JSONSerializer;
+import com.netty.demo.netty190510.packet.LoginResponsePacket;
+import com.netty.demo.netty190510.packet.MessageRequestPacket;
+import com.netty.demo.netty190510.packet.MessageResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.netty.channel.ChannelHandlerContext;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PacketCodeC {
+
+    public static final PacketCodeC INSTANCE = new PacketCodeC();
 
     private static final int MAGIC_NUMBER = 0x12345678;
     private static final Map<Byte, Class<? extends Packet>> packetTypeMap;
@@ -17,15 +23,20 @@ public class PacketCodeC {
     static {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(Command.LOGIN_REQUEST, LoginRequestPacket.class);
+        packetTypeMap.put(Command.LOGIN_RESULT, LoginResponsePacket.class);
+        packetTypeMap.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(Command.MESSAGE_RESULT, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
         serializerMap.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-    public ByteBuf encode(Packet packet) {
+    public ByteBuf encode(ByteBufAllocator alloc,Packet packet) {
         // 1. 创建 ByteBuf 对象
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
+//        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
+        //获取与当前连接相关的bytebuf
+        ByteBuf byteBuf = alloc.buffer();
         // 2. 序列化 Java 对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
