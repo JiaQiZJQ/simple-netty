@@ -1,9 +1,10 @@
-package com.netty.demo.netty190522;
+package com.netty.demo.netty190522_1;
 
 import com.netty.demo.netty190522_1.config.PacketDecoder;
 import com.netty.demo.netty190522_1.config.PacketEncoder;
 import com.netty.demo.netty190522_1.handler.server.LoginRequestHandler;
 import com.netty.demo.netty190522_1.handler.server.MessageRequestHandler;
+import com.netty.demo.netty190522_1.handler.server.Spliter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -28,6 +29,7 @@ public class NettyServer {
 
                     @Override
                     protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
+                        nioSocketChannel.pipeline().addLast(new Spliter());
                         nioSocketChannel.pipeline().addLast(new PacketDecoder());
                         nioSocketChannel.pipeline().addLast(new LoginRequestHandler());
                         nioSocketChannel.pipeline().addLast(new MessageRequestHandler());

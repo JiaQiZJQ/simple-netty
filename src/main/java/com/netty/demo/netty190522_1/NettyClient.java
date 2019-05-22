@@ -1,4 +1,4 @@
-package com.netty.demo.netty190522;
+package com.netty.demo.netty190522_1;
 
 import com.netty.demo.netty190508_1.PacketCodeC;
 import com.netty.demo.netty190510.LoginUtil;
@@ -8,6 +8,7 @@ import com.netty.demo.netty190522_1.config.PacketEncoder;
 import com.netty.demo.netty190522_1.handler.client.ClientHandler;
 import com.netty.demo.netty190522_1.handler.client.LoginResponseHandler;
 import com.netty.demo.netty190522_1.handler.client.MessageResponseHandler;
+import com.netty.demo.netty190522_1.handler.server.Spliter;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -35,6 +36,7 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
+                        socketChannel.pipeline().addLast(new Spliter());
                         socketChannel.pipeline().addLast(new PacketDecoder());
                         socketChannel.pipeline().addLast(new LoginResponseHandler());
                         socketChannel.pipeline().addLast(new MessageResponseHandler());
@@ -57,8 +59,8 @@ public class NettyClient {
                 System.out.println("连接失败进行重试,俩分钟后重试");
                 bootstrap.group().schedule(() -> connect(host, port, bootstrap),2, TimeUnit.SECONDS);
             }else {
-                Channel channel = ((ChannelFuture) future).channel();
-                startConsoThread(channel);
+//                Channel channel = ((ChannelFuture) future).channel();
+//                startConsoThread(channel);
             }
         });
     }
