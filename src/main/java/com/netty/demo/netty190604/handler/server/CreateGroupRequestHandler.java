@@ -1,5 +1,6 @@
 package com.netty.demo.netty190604.handler.server;
 
+import com.netty.demo.netty190604.config.Session;
 import com.netty.demo.netty190604.config.SessionUtil;
 import com.netty.demo.netty190604.packet.CreateGroupRequestPacket;
 import com.netty.demo.netty190604.packet.CreateGroupResponsePacket;
@@ -25,7 +26,7 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
         List<String> userIdList = createGroupRequestPacket.getUserIdList();//获取群成员id
         ChannelGroup channelGroup = new DefaultChannelGroup(channelHandlerContext.executor());//创建一个channel分组
         List<String> userNameList = new ArrayList<>();
-
+        channelGroup.add(channelHandlerContext.channel());//先将自己加入群聊
         userIdList.stream().forEach(id ->{
             Channel channel = SessionUtil.getChannel(id);//根据userID获取channel信息
             if(channel != null && SessionUtil.hasLogin(channel)){
