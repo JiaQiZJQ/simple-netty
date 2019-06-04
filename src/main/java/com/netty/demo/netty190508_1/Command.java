@@ -21,4 +21,14 @@ public interface Command {
      * 服务端应答消息指令
      */
     Byte MESSAGE_RESULT = 4;
+
+    /**
+     * 创建群聊指令
+     */
+    Byte CREATE_GROUP_REQUEST = 5;
+
+    /**
+     * 创建群聊应答指令
+     */
+    Byte CREATE_GROUP_RESULT = 6;
 }
