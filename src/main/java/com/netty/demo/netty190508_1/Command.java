@@ -31,4 +31,24 @@ public interface Command {
      * 创建群聊应答指令
      */
     Byte CREATE_GROUP_RESULT = 6;
+
+    /**
+     * 登出指令指令
+     */
+    Byte LOGIN_QUIET_REQUEST = 7;
+
+    /**
+     * 登出应答指令
+     */
+    Byte LOGIN_QUIET_RESULT = 8;
+
+    /**
+     * 群聊指令
+     */
+    Byte GROUP_MSG_REQUEST = 9;
+
+    /**
+     * 群聊应答指令
+     */
+    Byte GROUP_MSG_RESULT = 10;
 }
