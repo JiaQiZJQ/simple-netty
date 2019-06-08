@@ -28,6 +28,8 @@ public class PacketCodeC {
         packetTypeMap.put(Command.MESSAGE_RESULT, MessageResponsePacket.class);
         packetTypeMap.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         packetTypeMap.put(Command.CREATE_GROUP_RESULT, CreateGroupResponsePacket.class);
+        packetTypeMap.put(Command.LOGIN_QUIET_REQUEST, LoginQuietRequestPacket.class);
+        packetTypeMap.put(Command.LOGIN_QUIET_RESULT, LoginQuietResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

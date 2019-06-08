@@ -4,6 +4,7 @@ import com.netty.demo.netty190604.config.PacketDecoder;
 import com.netty.demo.netty190604.config.PacketEncoder;
 import com.netty.demo.netty190604.config.console.ConsoleCommandManage;
 import com.netty.demo.netty190604.handler.client.CreateGroupResponseHandler;
+import com.netty.demo.netty190604.handler.client.LoginQuietResponseHandler;
 import com.netty.demo.netty190604.handler.client.LoginResponseHandler;
 import com.netty.demo.netty190604.handler.client.MessageResponseHandler;
 import com.netty.demo.netty190604.handler.server.Spliter;
@@ -37,6 +38,7 @@ public class NettyClient {
                         socketChannel.pipeline().addLast(new PacketDecoder());
                         socketChannel.pipeline().addLast(new MessageResponseHandler());
                         socketChannel.pipeline().addLast(new LoginResponseHandler());
+                        socketChannel.pipeline().addLast(new LoginQuietResponseHandler());
                         socketChannel.pipeline().addLast(new CreateGroupResponseHandler());
                         socketChannel.pipeline().addLast(new PacketEncoder());
                     }
